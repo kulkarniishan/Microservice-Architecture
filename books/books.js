@@ -25,8 +25,8 @@ app.post('/book', (req, res) => {
     newBook.save()
         .then((response) => {
             res.status(200).json({
-                message:"Record added",
-                statsu:200
+                message: "Record added",
+                statsu: 200
             })
         })
         .catch((err) => {
@@ -37,6 +37,31 @@ app.post('/book', (req, res) => {
             })
         })
 });
+
+app.get('/books', (req, res) => {
+    book.find()
+        .then((books) => {
+            res.status(200).json(books)
+        })
+        .catch((error) => {
+            res.status(500).json(error)
+        })
+});
+
+app.get('/book/:id', (req, res) => {
+    const id = req.params.id;
+    book.findById(id)
+        .then((book) => {
+            if (book)
+                res.status(200).json(book);
+            else
+                res.status(404);
+        })
+        .catch((error) => {
+            res.status(500).json(error)
+        })
+});
+
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
