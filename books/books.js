@@ -62,6 +62,19 @@ app.get('/book/:id', (req, res) => {
         })
 });
 
+app.delete('/book/:id', (req, res) => {
+    book.findOneAndRemove(req.params.id)
+    .then((book) => {
+        res.status(200).json({
+            message:"Book Deleted successfully!",
+            status:200
+        });
+    })
+    .catch((error) => {
+        res.status(500).json(error)
+    })
+});
+
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
